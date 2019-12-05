@@ -1,3 +1,7 @@
+/*
+ * Benjamin Raiford
+ * 12/05/2019
+ */
 #include <ctime>
 #include <iostream>
 #include <fstream>
@@ -24,6 +28,7 @@ void bubbleSort(vector<currType>& numbers, int size){
     }
 }
 
+
 //SelectionSort adapted from Slides 22
 template <typename currType>
 void selectionSort(vector<currType>& numbers, int size){
@@ -38,6 +43,7 @@ void selectionSort(vector<currType>& numbers, int size){
         swap(numbers[i], numbers[min]);
     }
 }
+
 
 //QuickSort adapted from Zybooks
 template<typename currType>
@@ -108,6 +114,7 @@ void quickSort(vector<currType>& numbers, int i, int k) {
     quickSort(numbers, j + 1, k);
 }
 
+
 //MergeSort adapted from Lab 2
 template<typename currType>
 void mergeSortedLists(vector<currType>& a, vector<currType>& tmp, int left, int middle, int right) {
@@ -174,144 +181,148 @@ void mergeSort(vector<currType>& a, vector<currType>& tmp, int left, int right){
 int main() {
     //stream files
     ifstream spreadsheet;
-    ofstream outFile;
 
-    //vector for parsed data
-    vector<Pitch> dataV;
+    for(int numElements = 1000; numElements < 100000; numElements+=1000){
+        //vector for parsed data
+        vector<Pitch> dataV(numElements);
 
-    //parsing data
-    cout << "Reading dataset..." << endl;
-    spreadsheet.open("../pitchdata.csv");
-    if(!spreadsheet.is_open()){
-        cout << "Could not open file." << endl;
-    }
+        //parsing data
+        cout << "Reading dataset..." << endl;
+        spreadsheet.open("../pitchdata.csv");
+        if(!spreadsheet.is_open()){
+            cout << "Could not open file." << endl;
+        }
 
-    while(!spreadsheet.eof()){
+        int iterator = 0;
+        while((!spreadsheet.eof()) || (iterator < numElements)){
 
-        //put each line into a stringstream for parsing
-        string line;
-        getline(spreadsheet, line);
-        stringstream s(line);
+            //put each line into a stringstream for parsing
+            string line;
+            getline(spreadsheet, line);
+            stringstream s(line);
 
-        //parse data into string variables
-        string strStartSpeed, strEndSpeed, result, type;
-        getline(s, strStartSpeed, ',');
-        getline(s, strEndSpeed, ',');
-        getline(s, result, ',');
-        getline(s, type,',');
+            //parse data into string variables
+            string strStartSpeed, strEndSpeed, result, type;
+            getline(s, strStartSpeed, ',');
+            getline(s, strEndSpeed, ',');
+            getline(s, result, ',');
+            getline(s, type,',');
 
-        //add an object of Pitch to the vector
-        dataV.emplace_back(stod(strStartSpeed), stod(strEndSpeed), result, type);
+            //add an object of Pitch to the vector
+            dataV.emplace_back(stod(strStartSpeed), stod(strEndSpeed), result, type);
 
-    }
-    spreadsheet.close();
+            iterator++;
+        }
+        spreadsheet.close();
 
-    //Copy vectors to be sorted by each algorithm
-    vector<Pitch> dataV_B = dataV; //BubbleSort vector
-    vector<Pitch> dataV_S = dataV; //SelectionSort vector
-    vector<Pitch> dataV_Q = dataV; //QuickSort vector
-    vector<Pitch> dataV_M = dataV; //MergeSort vector
+        //Copy vectors to be sorted by each algorithm
+        vector<Pitch> dataV_B = dataV; //BubbleSort vector
+        vector<Pitch> dataV_S = dataV; //SelectionSort vector
+        vector<Pitch> dataV_Q = dataV; //QuickSort vector
+        vector<Pitch> dataV_M = dataV; //MergeSort vector
 
-    //allocate original integer vector
-    vector<int> intV;
-    intV.resize(dataV.size());//optimize speed and memory allocation by setting size first
-    int randomValue;
-    srand(time(nullptr));
-    for(int & element : intV){
-        randomValue = rand() % 100;
-        element = randomValue;
-    }
+        //allocate original integer vector
+        vector<int> intV;
+        intV.resize(dataV.size());//optimize speed and memory allocation by setting size first
+        int randomValue;
+        srand(time(nullptr));
+        for(int & element : intV){
+            randomValue = rand() % 100;
+            element = randomValue;
+        }
 
-    //Copy vectors to be sorted by each algorithm
-    vector<int> intV_B = intV; //BubbleSort vector
-    vector<int> intV_S = intV; //SelectionSort vector
-    vector<int> intV_Q = intV; //QuickSort vector
-    vector<int> intV_M = intV; //MergeSort vector
+        //Copy vectors to be sorted by each algorithm
+        vector<int> intV_B = intV; //BubbleSort vector
+        vector<int> intV_S = intV; //SelectionSort vector
+        vector<int> intV_Q = intV; //QuickSort vector
+        vector<int> intV_M = intV; //MergeSort vector
 
-    //Run sorting algorithms on unsorted vectors
+        //Run sorting algorithms on unsorted vectors
 
         //BubbleSort
-        cout << "Starting BubbleSort..." << endl;
+        //cout << "Starting BubbleSort..." << endl;
+
+        clock_t startPitch_B = clock(); //start clock
         bubbleSort(dataV_B, dataV.size());
+        clock_t endPitch_B = clock(); //end clock
+        double elapsedPitch_B = double(endPitch_B - startPitch_B) / CLOCKS_PER_SEC;
+
+        clock_t startInt_B = clock(); //start clock
         bubbleSort(intV_B, intV.size());
-        cout << "\tBubbleSort finished.\n" << endl;
+        clock_t endInt_B = clock(); //end clock
+        double elapsedInt_B = double(endInt_B - startInt_B) / CLOCKS_PER_SEC;
+
+        //cout << "\tBubbleSort finished.\n" << endl;
 
 
         //SelectionSort
-        cout << "Starting SelectionSort..." << endl;
+        //cout << "Starting SelectionSort..." << endl;
+
+        clock_t startPitch_S = clock(); //start clock
         selectionSort(dataV_S, dataV.size());
+        clock_t endPitch_S = clock(); //end clock
+        double elapsedPitch_S = double(endPitch_S - startPitch_S) / CLOCKS_PER_SEC;
+
+        clock_t startInt_S = clock(); //start clock
         selectionSort(intV_S, intV.size());
-        cout << "\tSelectionSort finished.\n" << endl;
+        clock_t endInt_S = clock();
+        double elapsedInt_S = double(endInt_S - startInt_S) / CLOCKS_PER_SEC;
+
+        //cout << "\tSelectionSort finished.\n" << endl;
 
 
         //QuickSort
-        cout << "Starting QuickSort..." << endl;
+        //cout << "Starting QuickSort..." << endl;
+
+        clock_t startPitch_Q = clock(); //start clock
         quickSort(dataV_Q, 0, dataV.size()-1);
+        clock_t endPitch_Q = clock(); //end clock
+        double elapsedPitch_Q = double(endPitch_Q - startPitch_Q)/ CLOCKS_PER_SEC;
+
+        clock_t startInt_q = clock(); //start clock
         quickSort(intV_Q, 0, intV.size()-1);
-        cout << "\tQuickSort finished.\n" << endl;
+        clock_t endInt_q = clock(); //start clock
+        double elapsedInt_Q = double(endPitch_Q - startPitch_Q) / CLOCKS_PER_SEC;
+
+        //cout << "\tQuickSort finished.\n" << endl;
 
 
         //MergeSort
-        cout << "Starting MergeSort..." << endl;
+        //cout << "Starting MergeSort..." << endl;
         vector<Pitch> tempPitch;
         tempPitch.resize(dataV.size());
+
+        clock_t startPitch_M = clock(); //start clock
         mergeSort(dataV_M, tempPitch, 0, dataV.size()-1);
+        clock_t endPitch_M = clock(); //end clock
+        double elapsedPitch_M = double(endPitch_M - startPitch_M) / CLOCKS_PER_SEC;
+
 
         vector<int> tempInt;
         tempInt.resize(intV.size());
+
+        clock_t startInt_M = clock(); //start clock
         mergeSort(intV_M, tempInt, 0, intV.size()-1);
-        cout << "\tMergeSort finished.\n" << endl;
-
-    //Run sorting algorithms on sorted vectors
-
-        //Sorted BubbleSort
-        cout << "Sorted: starting BubbleSort..." << endl;
-        bubbleSort(dataV_B, dataV.size());
-        bubbleSort(intV_B, intV.size());
-        cout << "\tBubbleSort finished.\n" << endl;
+        clock_t endInt_M = clock(); //end clock
+        double elapsedInt_M = double(endInt_M - startInt_M) / CLOCKS_PER_SEC;
 
 
-        //Sorted SelectionSort
-        cout << "Sorted: starting SelectionSort..." << endl;
-        selectionSort(dataV_S, dataV.size());
-        selectionSort(intV_S, intV.size());
-        cout << "\tSelectionSort finished.\n" << endl;
-
-
-        //Sorted QuickSort
-        cout << "Starting QuickSort..." << endl;
-        quickSort(dataV_Q, 0, dataV.size()-1);
-        quickSort(intV_Q, 0, intV.size()-1);
-        cout << "\tQuickSort finished.\n" << endl;
-
-
-        //Sorted MergeSort
-        cout << "Starting MergeSort..." << endl;
-        mergeSort(dataV_M, tempPitch, 0, dataV.size()-1);
-        mergeSort(intV_M, tempInt, 0, intV.size()-1);
-        cout << "\tMergeSort finished.\n" << endl;
+        //cout << "\tMergeSort finished.\n" << endl;
 
 
 
-/*
-    outFile.open("../output.txt");
-    for(auto i = 0; i < dataV.size(); i++){
-        //outFile << i << endl;
-        //outFile << dataV_B.at(i) << endl;
-        //outFile << intV_B.at(i) << endl;
-
-        //outFile << dataV_S.at(i) << endl;
-        //outFile << intV_S.at(i) << endl;
-
-        //outFile << dataV_Q.at(i) << endl;
-        //outFile << intV_Q.at(i) << endl;
-
-        //outFile << dataV_M.at(i) << endl;
-        //outFile << intV_M.at(i) << endl;
-
+    cout << numElements << "\t" <<
+    elapsedPitch_B << "\t" <<
+    elapsedInt_B << "\t" <<
+    elapsedPitch_S << "\t" <<
+    elapsedInt_S << "\t" <<
+    elapsedPitch_Q << "\t" <<
+    elapsedInt_Q << "\t" <<
+    elapsedPitch_M << "\t" <<
+    elapsedInt_M <<
+    endl;
     }
-    outFile.close();
-*/
+
 
     return 0;
 }
