@@ -54,6 +54,7 @@ bool Pitch::operator<=(const Pitch &rhs) {
         return false;
 }
 
+//Print Data to the screen
 void Pitch::printDataScreen() {
         cout << "Pitch type: " << pitchType << endl;
         cout << "Speed from pitcher's hand: " << startSpeed << endl;

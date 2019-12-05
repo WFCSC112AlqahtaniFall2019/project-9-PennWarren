@@ -23,9 +23,6 @@ public:
     bool operator <=(const Pitch &rhs);
     friend std::ostream &operator<<(std::ostream &os, const Pitch &p);
 
-
-
-
     //Functions
     void printDataScreen();
 
