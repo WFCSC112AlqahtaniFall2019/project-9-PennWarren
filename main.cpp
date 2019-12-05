@@ -7,6 +7,38 @@
 
 using namespace std;
 
+//BubbleSort adapted from Slides 22
+template<typename currType>
+void bubbleSort(vector<currType>& numbers, int size){
+    int i, j;
+    bool swapped;
+    for (i = 0; i < size-1; i++){
+        swapped = false;
+        for (j = 0; j < size-i-1; j++)
+            if (numbers[j] > numbers[j + 1]){
+                swap(numbers[j], numbers[j + 1]);
+                swapped = true;
+            }
+        if(!swapped)
+            break;
+    }
+}
+
+//SelectionSort adapted from Slides 22
+template <typename currType>
+void selectionSort(vector<currType>& numbers, int size){
+    int min;
+    for (int i = 0; i < size - 1; ++i){
+        min = i;
+        for (int j = i + 1; j < size; ++j) {
+            if (numbers[j] < numbers[min]) {
+                min = j;
+            }
+        }
+        swap(numbers[i], numbers[min]);
+    }
+}
+
 //QuickSort adapted from Zybooks
 template<typename currType>
 int partition(vector<currType>& numbers, int i, int k) {
@@ -56,7 +88,6 @@ int partition(vector<currType>& numbers, int i, int k) {
 
     return h;
 }
-
 template<typename currType>
 void quickSort(vector<currType>& numbers, int i, int k) {
     int j;
@@ -125,7 +156,6 @@ void mergeSortedLists(vector<currType>& a, vector<currType>& tmp, int left, int 
         a.at(i) = tmp.at(i);
     }
 }
-
 template<typename currType>
 void mergeSort(vector<currType>& a, vector<currType>& tmp, int left, int right){
     //base is implicit:
@@ -140,8 +170,6 @@ void mergeSort(vector<currType>& a, vector<currType>& tmp, int left, int right){
         mergeSortedLists(a, tmp, left, midpoint, right);
     }
 }//
-
-
 
 int main() {
     //stream files
@@ -200,24 +228,81 @@ int main() {
     vector<int> intV_Q = intV; //QuickSort vector
     vector<int> intV_M = intV; //MergeSort vector
 
-    //QuickSort
-    quickSort(dataV_Q, 0, dataV.size()-1);
-    quickSort(intV_Q, 0, intV.size()-1);
+    //Run sorting algorithms on unsorted vectors
 
-    /*
-    //MergeSort
-    vector<Pitch> tempPitch;
-    tempPitch.resize(dataV.size());
-    mergeSort(dataV_M, tempPitch, 0, dataV.size()-1);
+        //BubbleSort
+        cout << "Starting BubbleSort..." << endl;
+        bubbleSort(dataV_B, dataV.size());
+        bubbleSort(intV_B, intV.size());
+        cout << "\tBubbleSort finished.\n" << endl;
 
-    vector<int> tempInt;
-    tempInt.resize(intV.size());
-    mergeSort(intV_M, tempInt, 0, intV.size()-1);
-    */
 
+        //SelectionSort
+        cout << "Starting SelectionSort..." << endl;
+        selectionSort(dataV_S, dataV.size());
+        selectionSort(intV_S, intV.size());
+        cout << "\tSelectionSort finished.\n" << endl;
+
+
+        //QuickSort
+        cout << "Starting QuickSort..." << endl;
+        quickSort(dataV_Q, 0, dataV.size()-1);
+        quickSort(intV_Q, 0, intV.size()-1);
+        cout << "\tQuickSort finished.\n" << endl;
+
+
+        //MergeSort
+        cout << "Starting MergeSort..." << endl;
+        vector<Pitch> tempPitch;
+        tempPitch.resize(dataV.size());
+        mergeSort(dataV_M, tempPitch, 0, dataV.size()-1);
+
+        vector<int> tempInt;
+        tempInt.resize(intV.size());
+        mergeSort(intV_M, tempInt, 0, intV.size()-1);
+        cout << "\tMergeSort finished.\n" << endl;
+
+    //Run sorting algorithms on sorted vectors
+
+        //Sorted BubbleSort
+        cout << "Sorted: starting BubbleSort..." << endl;
+        bubbleSort(dataV_B, dataV.size());
+        bubbleSort(intV_B, intV.size());
+        cout << "\tBubbleSort finished.\n" << endl;
+
+
+        //Sorted SelectionSort
+        cout << "Sorted: starting SelectionSort..." << endl;
+        selectionSort(dataV_S, dataV.size());
+        selectionSort(intV_S, intV.size());
+        cout << "\tSelectionSort finished.\n" << endl;
+
+
+        //Sorted QuickSort
+        cout << "Starting QuickSort..." << endl;
+        quickSort(dataV_Q, 0, dataV.size()-1);
+        quickSort(intV_Q, 0, intV.size()-1);
+        cout << "\tQuickSort finished.\n" << endl;
+
+
+        //Sorted MergeSort
+        cout << "Starting MergeSort..." << endl;
+        mergeSort(dataV_M, tempPitch, 0, dataV.size()-1);
+        mergeSort(intV_M, tempInt, 0, intV.size()-1);
+        cout << "\tMergeSort finished.\n" << endl;
+
+
+
+/*
     outFile.open("../output.txt");
     for(auto i = 0; i < dataV.size(); i++){
-        outFile << i << endl;
+        //outFile << i << endl;
+        //outFile << dataV_B.at(i) << endl;
+        //outFile << intV_B.at(i) << endl;
+
+        //outFile << dataV_S.at(i) << endl;
+        //outFile << intV_S.at(i) << endl;
+
         //outFile << dataV_Q.at(i) << endl;
         //outFile << intV_Q.at(i) << endl;
 
@@ -225,7 +310,8 @@ int main() {
         //outFile << intV_M.at(i) << endl;
 
     }
-
+    outFile.close();
+*/
 
     return 0;
 }

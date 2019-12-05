@@ -70,4 +70,3 @@ ostream &operator<<(ostream &os, const Pitch &p) {
 
     return os;
 }
-

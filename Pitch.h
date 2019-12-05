@@ -24,7 +24,9 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Pitch &p);
 
 
-        //Functions
+
+
+    //Functions
     void printDataScreen();
 
     //Data pulled from CSV
