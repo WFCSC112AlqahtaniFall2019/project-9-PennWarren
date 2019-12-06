@@ -2,26 +2,26 @@
 // Created by Benjamin Raiford on 12/4/19.
 //
 
-#ifndef PROJECT9_PITCH_H
-#define PROJECT9_PITCH_H
+#ifndef PROJECT9_DATA_H
+#define PROJECT9_DATA_H
 
 #include <iostream>
 #include <fstream>
 #include <string>
 
-class Pitch {
+class Data {
 public:
 
     //Constructors
-    Pitch();
-    Pitch(double s_Speed, double e_Speed, std::string result, std::string type);
+    Data();
+    Data(double s_Speed, double e_Speed, std::string result, std::string type);
 
     //Overloaded Operators
-    bool operator >(const Pitch& rhs);
-    bool operator <(const Pitch& rhs);
-    bool operator ==(const Pitch &rhs);
-    bool operator <=(const Pitch &rhs);
-    friend std::ostream &operator<<(std::ostream &os, const Pitch &p);
+    bool operator >(const Data& rhs);
+    bool operator <(const Data& rhs);
+    bool operator ==(const Data &rhs);
+    bool operator <=(const Data &rhs);
+    friend std::ostream &operator<<(std::ostream &os, const Data &p);
 
     //Functions
     void printDataScreen();
@@ -36,4 +36,4 @@ public:
 };
 
 
-#endif //PROJECT9_PITCH_H
+#endif //PROJECT9_DATA_H

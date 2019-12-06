@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "Pitch.h"
+#include "Data.h"
 
 using namespace std;
 
@@ -184,7 +184,7 @@ int main() {
     ifstream spreadsheet;
 
     //vector for parsed data
-    vector<Pitch> dataV;
+    vector<Data> dataV;
 
     //parsing data
     cout << "Reading dataset..." << endl;
@@ -207,7 +207,7 @@ int main() {
         getline(s, result, ',');
         getline(s, type,',');
 
-        //add an object of Pitch to the vector
+        //add an object of Data to the vector
         dataV.emplace_back(stod(strStartSpeed), stod(strEndSpeed), result, type);
     }
     spreadsheet.close();
@@ -228,10 +228,10 @@ int main() {
     for (int numElements = 1000; numElements <= dataV.size(); numElements += 1000){
 
         //Copy vectors to be sorted by each algorithm
-        vector<Pitch> dataV_B = dataV; //BubbleSort vector
-        vector<Pitch> dataV_S = dataV; //SelectionSort vector
-        vector<Pitch> dataV_Q = dataV; //QuickSort vector
-        vector<Pitch> dataV_M = dataV; //MergeSort vector
+        vector<Data> dataV_B = dataV; //BubbleSort vector
+        vector<Data> dataV_S = dataV; //SelectionSort vector
+        vector<Data> dataV_Q = dataV; //QuickSort vector
+        vector<Data> dataV_M = dataV; //MergeSort vector
 
         vector<int> intV_B = intV; //BubbleSort vector
         vector<int> intV_S = intV; //SelectionSort vector
@@ -263,7 +263,7 @@ int main() {
 
         //MergeSort
         cout << "Starting MergeSort..." << endl;
-        vector<Pitch> tempPitch;
+        vector<Data> tempPitch;
         tempPitch.resize(dataV.size());
         mergeSort(dataV_M, tempPitch, 0, numElements);
 
@@ -280,7 +280,7 @@ int main() {
  */
 
 /*
-    vector<Pitch> tmp_Pitch;
+    vector<Data> tmp_Pitch;
     tmp_Pitch.resize(dataV.size());
     mergeSort(dataV, tmp_Pitch, 0, dataV.size()-1);
 
@@ -291,10 +291,10 @@ int main() {
     for (int numElements = 1000; numElements <= dataV.size(); numElements += 1000){
 
         //Copy vectors to be sorted by each algorithm
-        vector<Pitch> dataV_B = dataV; //BubbleSort vector
-        vector<Pitch> dataV_S = dataV; //SelectionSort vector
-        vector<Pitch> dataV_Q = dataV; //QuickSort vector
-        vector<Pitch> dataV_M = dataV; //MergeSort vector
+        vector<Data> dataV_B = dataV; //BubbleSort vector
+        vector<Data> dataV_S = dataV; //SelectionSort vector
+        vector<Data> dataV_Q = dataV; //QuickSort vector
+        vector<Data> dataV_M = dataV; //MergeSort vector
 
         vector<int> intV_B = intV; //BubbleSort vector
         vector<int> intV_S = intV; //SelectionSort vector
@@ -353,7 +353,7 @@ int main() {
 
         //MergeSort
         //cout << "Starting MergeSort..." << endl;
-        vector<Pitch> tempPitch;
+        vector<Data> tempPitch;
         tempPitch.resize(dataV.size());
 
         clock_t startPitch_M = clock(); //start clock
